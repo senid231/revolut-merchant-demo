@@ -1,0 +1,50 @@
+<div class="flex justify-between">
+  <div class="page-heading">Customers</div>
+
+  <div class="flex items-center">
+    <%= link_to 'New Customer', new_customer_path, class: 'btn-primary' %>
+  </div>
+</div>
+
+<div class="card relative overflow-x-auto">
+  <% if @customers.any? %>
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3 w-0">ID</th>
+        <th scope="col" class="px-6 py-3 w-0">
+          <span class="sr-only">Actions</span>
+        </th>
+        <th scope="col" class="px-6 py-3">Full Name</th>
+        <th scope="col" class="px-6 py-3">Email</th>
+        <th scope="col" class="px-6 py-3">Revolut ID</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @customers.each do |customer| %>
+        <tr class="bg-white odd:bg-gray-50 border-b hover:bg-gray-100">
+          <td class="px-6 py-4"><%= customer.id %></td>
+          <td class="px-6 py-4">
+            <div class="flex flex-row justify-end gap-x-2">
+              <%= link_to 'Show', customer_path(customer.id), class: 'link-primary' %>
+              <%= link_to 'Edit', edit_customer_path(customer.id), class: 'link-primary' %>
+              <%= button_to "Remove",
+                            customer_path(customer.id),
+                            class: 'link-primary',
+                            method: :delete,
+                            form: {
+                              data: { turbo_confirm: "Are you sure?" }
+                            } %>
+            </div>
+          </td>
+          <td class="px-6 py-4"><%= customer.full_name %></td>
+          <td class="px-6 py-4"><%= customer.email %></td>
+          <td class="px-6 py-4"><%= customer.revolut_customer_id %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="p-5">nothing</div>
+  <% end %>
+</div>

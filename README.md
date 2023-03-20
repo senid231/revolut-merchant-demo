@@ -1,24 +1,21 @@
-# README
+# Revolut Merchant
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Concept of revolut merchant API integration with Rails application.
 
-Things you may want to cover:
+Inspired by [jpalumickas/revolut-ruby](https://github.com/jpalumickas/revolut-ruby)
 
-* Ruby version
+## Requirements
+Ruby: 3.1.2
+SQLite: 3
 
-* System dependencies
+## Installation
 
-* Configuration
+```shell
+ruby bin/setup
+```
 
-* Database creation
+## Running
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```shell
+bundle exec rails server -b 127.0.0.1 -p 3000
+```

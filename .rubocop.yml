@@ -126,3 +126,6 @@ Rails/SkipsModelValidations:
   Enabled: true
   AllowedMethods:
     - update_columns
+
+Rails/I18nLocaleTexts:
+  Enabled: false

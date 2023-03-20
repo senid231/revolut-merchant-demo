@@ -1,0 +1,45 @@
+<div class="flex justify-between">
+  <div class="page-heading">Customer №<%= @customer.id %></div>
+
+  <div class="flex items-center gap-x-2">
+    <%= link_to 'Edit', edit_customer_path(@customer.id), class: 'link-primary' %>
+    <%= button_to "Remove",
+                  customer_path(@customer.id),
+                  class: 'link-primary',
+                  method: :delete,
+                  form: {
+                    data: { turbo_confirm: "Are you sure?" }
+                  } %>
+  </div>
+</div>
+
+<div class="flex flex-row gap-x-4">
+  <div class="card relative w-min">
+    <table class="text-sm text-left text-gray-500">
+      <tbody>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">ID</th>
+        <td class="px-6 py-4"><%= @customer.id %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Full&nbsp;Name</th>
+        <td class="px-6 py-4"><%= @customer.full_name %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Email</th>
+        <td class="px-6 py-4"><%= @customer.email %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Revolut&nbsp;ID</th>
+        <td class="px-6 py-4"><%= @customer.revolut_customer_id %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card relative w-min p-2">
+    <div>Revolut Customer</div>
+    <pre><%= JSON.pretty_generate @customer.revolut_customer %></pre>
+  </div>
+
+</div>
