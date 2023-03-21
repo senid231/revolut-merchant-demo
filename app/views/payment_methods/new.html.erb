@@ -1,0 +1,32 @@
+<%= turbo_frame_tag 'payment_method_setup' do %>
+  <%= form_for :payment_method, method: :post, url: customer_payment_methods_path, id: 'payment-method-create' do |f| %>
+    <%= f.hidden_field :payment_method_setup_id, value: @payment_method_setup.id %>
+  <% end %>
+  <%= render 'layouts/revolut_checkout' %>
+  <script>
+    RevolutCheckout(
+      "<%= @payment_method_setup.revolut_order_public_id %>",
+      "<%= RevolutMerchant.config.mode %>"
+    ).then(function (instance) {
+      instance.payWithPopup({
+        onSuccess() {
+          document.getElementById('payment-method-create').submit()
+        },
+        onError(message) {
+          console.log('onError', message)
+          document.getElementById('payment-method-create').submit()
+        },
+        savePaymentMethodFor: 'merchant',
+        locale: 'en',
+        billingAddress: {
+          countryCode: 'GB',
+          region: 'Greater London',
+          city: 'London',
+          streetLine1: 'Revolut',
+          streetLine2: '1 Canada Square',
+          postcode: 'EC2V 6DN'
+        }
+      })
+    })
+  </script>
+<% end %>

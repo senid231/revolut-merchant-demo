@@ -9,6 +9,7 @@ class CustomersController < ApplicationController
   end
 
   def show
+    @payment_methods = @customer.payment_methods.to_a
   end
 
   def new
@@ -40,7 +41,7 @@ class CustomersController < ApplicationController
   end
 
   def destroy
-    if @client.destroy
+    if @customer.destroy
       flash[:notice] = 'Customer updated'
       redirect_to url_for(action: :index)
     else
@@ -57,5 +58,9 @@ class CustomersController < ApplicationController
 
   def find_customer
     @customer = Customer.find params[:id]
+  end
+
+  def current_menu
+    :customers
   end
 end

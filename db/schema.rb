@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_317_171_933) do
+ActiveRecord::Schema[7.0].define(version: 20_230_321_172_026) do
   create_table 'customers', force: :cascade do |t|
     t.string 'full_name', null: false
     t.string 'email', null: false
@@ -21,4 +21,27 @@ ActiveRecord::Schema[7.0].define(version: 20_230_317_171_933) do
     t.datetime 'updated_at', null: false
     t.index ['email'], name: 'index_customers_on_email', unique: true
   end
+
+  create_table 'payment_method_setups', force: :cascade do |t|
+    t.integer 'customer_id', null: false
+    t.string 'revolut_order_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['customer_id'], name: 'index_payment_method_setups_on_customer_id'
+    t.index ['revolut_order_id'], name: 'index_payment_method_setups_on_revolut_order_id', unique: true
+  end
+
+  create_table 'payment_methods', force: :cascade do |t|
+    t.integer 'customer_id', null: false
+    t.string 'revolut_pm_id', null: false
+    t.string 'card_brand', null: false
+    t.string 'card_last_four', null: false
+    t.date 'card_expired_at', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['customer_id'], name: 'index_payment_methods_on_customer_id'
+  end
+
+  add_foreign_key 'payment_method_setups', 'customers'
+  add_foreign_key 'payment_methods', 'customers'
 end

@@ -1,4 +1,8 @@
-<div class="flex justify-between">
+<div class="pb-4">
+  <%= link_to '<- Back', customer_path(@customer.id), class: 'link-primary' %>
+</div>
+
+<div class="flex justify-between pb-2">
   <div class="page-heading">Edit Customer <%= @customer.id %></div>
 </div>
 

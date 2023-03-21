@@ -1,0 +1,52 @@
+<div class="pb-4">
+  <%= link_to '<- Back', customer_path(@customer.id), class: 'link-primary' %>
+</div>
+
+<div class="flex justify-between pb-2">
+  <div class="page-heading">Payment method №<%= @payment_method.id %></div>
+
+  <div class="flex items-center gap-x-2">
+    <%= button_to "Remove",
+                  customer_payment_method_path(customer_id: @customer.id, id: @payment_method.id),
+                  class: 'btn-danger',
+                  method: :delete,
+                  form: {
+                    data: { turbo_confirm: "Are you sure?" }
+                  } %>
+  </div>
+</div>
+
+<div class="flex flex-row gap-x-4">
+  <div class="card relative w-min">
+    <table class="text-sm text-left text-gray-500">
+      <tbody>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">ID</th>
+        <td class="px-6 py-4"><%= @payment_method.id %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Card&nbsp;Number</th>
+        <td class="px-6 py-4"><%= @payment_method.card_number %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Card&nbsp;Brand</th>
+        <td class="px-6 py-4"><%= @payment_method.card_brand %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Card&nbsp;Expiry</th>
+        <td class="px-6 py-4"><%= @payment_method.card_expiry %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Revolut&nbsp;ID</th>
+        <td class="px-6 py-4 whitespace-nowrap"><%= @payment_method.revolut_pm_id %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card relative w-min p-2">
+    <div>Revolut Payment Method</div>
+    <pre><%= JSON.pretty_generate @payment_method.revolut_pm %></pre>
+  </div>
+
+</div>

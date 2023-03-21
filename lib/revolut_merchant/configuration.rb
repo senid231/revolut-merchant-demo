@@ -10,9 +10,11 @@ module RevolutMerchant
                   :logger
 
     attr_writer :url
+    attr_reader :mode
 
     def initialize
       @mode = CONST::MODE_SANDBOX
+      self.user_agent = "RevolutMerchant #{RevolutMerchant::VERSION} Ruby #{RUBY_VERSION}"
     end
 
     def mode=(value)
@@ -24,7 +26,7 @@ module RevolutMerchant
     def url
       return @url if defined?(@url)
 
-      CONST::MODE_URLS.fetch(@mode)
+      CONST::MODE_URLS.fetch(mode)
     end
   end
 end

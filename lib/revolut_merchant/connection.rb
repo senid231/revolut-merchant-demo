@@ -10,6 +10,10 @@ module RevolutMerchant
       request(:post, path, query:, body:).body
     end
 
+    def patch(path, query: nil, body: nil)
+      request(:patch, path, query:, body:).body
+    end
+
     def delete(path, query: nil)
       request(:delete, path, query:).body
     end

@@ -17,6 +17,7 @@
         </th>
         <th scope="col" class="px-6 py-3">Full Name</th>
         <th scope="col" class="px-6 py-3">Email</th>
+        <th scope="col" class="px-6 py-3">Payment methods Count</th>
         <th scope="col" class="px-6 py-3">Revolut ID</th>
       </tr>
       </thead>
@@ -39,6 +40,7 @@
           </td>
           <td class="px-6 py-4"><%= customer.full_name %></td>
           <td class="px-6 py-4"><%= customer.email %></td>
+          <td class="px-6 py-4"><%= customer.payment_methods.count %></td>
           <td class="px-6 py-4"><%= customer.revolut_customer_id %></td>
         </tr>
       <% end %>

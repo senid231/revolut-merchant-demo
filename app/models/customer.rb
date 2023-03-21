@@ -16,6 +16,11 @@
 #  index_customers_on_email  (email) UNIQUE
 #
 class Customer < ApplicationRecord
+  has_many :payment_method_setups, class_name: 'PaymentMethodSetup', dependent: :restrict_with_exception
+  has_many :payment_methods, class_name: 'PaymentMethod', dependent: :destroy
+
+  attr_readonly :revolut_customer_id
+
   validates :full_name, presence: true
   validates :email, presence: true
   validates :email, uniqueness: true, allow_blank: true
@@ -51,6 +56,7 @@ class Customer < ApplicationRecord
   end
 
   def remove_revolut_customer
+    payment_method_setups.find_each(&:remove!)
     RevolutMerchant::Client.customer_delete(revolut_customer_id)
   end
 end
