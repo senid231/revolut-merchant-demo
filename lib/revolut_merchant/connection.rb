@@ -2,18 +2,38 @@
 
 module RevolutMerchant
   class Connection
+    MIME_TYPE = 'application/json'
+
+    # @param path [String]
+    # @param query [Hash,nil]
+    # @return [Hash,Array]
+    # @raise [RevolutMerchant::Errors::ApiError]
     def get(path, query: nil)
       request(:get, path, query:).body
     end
 
+    # @param path [String]
+    # @param query [Hash,nil]
+    # @param body [Hash,nil]
+    # @return [Hash]
+    # @raise [RevolutMerchant::Errors::ApiError]
     def post(path, query: nil, body: nil)
       request(:post, path, query:, body:).body
     end
 
+    # @param path [String]
+    # @param query [Hash,nil]
+    # @param body [Hash,nil]
+    # @return [Hash]
+    # @raise [RevolutMerchant::Errors::ApiError]
     def patch(path, query: nil, body: nil)
       request(:patch, path, query:, body:).body
     end
 
+    # @param path [String]
+    # @param query [Hash,nil]
+    # @return [Hash]
+    # @raise [RevolutMerchant::Errors::ApiError]
     def delete(path, query: nil)
       request(:delete, path, query:).body
     end
@@ -47,8 +67,8 @@ module RevolutMerchant
       {
         url: RevolutMerchant.config.url,
         headers: {
-          'Content-Type' => 'application/json',
-          'Accept' => 'application/json',
+          'Content-Type' => MIME_TYPE,
+          'Accept' => MIME_TYPE,
           user_agent: RevolutMerchant.config.user_agent
         }
       }
