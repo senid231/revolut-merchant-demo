@@ -9,7 +9,6 @@ class CustomersController < ApplicationController
   end
 
   def show
-    @payment_methods = @customer.payment_methods.to_a
   end
 
   def new

@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+require 'faraday'
+
 module RevolutMerchant
   class Connection
     MIME_TYPE = 'application/json'
 
     # @param path [String]
     # @param query [Hash,nil]
-    # @return [Hash,Array]
     # @raise [RevolutMerchant::Errors::ApiError]
     def get(path, query: nil)
       request(:get, path, query:).body
@@ -15,7 +16,6 @@ module RevolutMerchant
     # @param path [String]
     # @param query [Hash,nil]
     # @param body [Hash,nil]
-    # @return [Hash]
     # @raise [RevolutMerchant::Errors::ApiError]
     def post(path, query: nil, body: nil)
       request(:post, path, query:, body:).body
@@ -24,7 +24,6 @@ module RevolutMerchant
     # @param path [String]
     # @param query [Hash,nil]
     # @param body [Hash,nil]
-    # @return [Hash]
     # @raise [RevolutMerchant::Errors::ApiError]
     def patch(path, query: nil, body: nil)
       request(:patch, path, query:, body:).body
@@ -32,7 +31,6 @@ module RevolutMerchant
 
     # @param path [String]
     # @param query [Hash,nil]
-    # @return [Hash]
     # @raise [RevolutMerchant::Errors::ApiError]
     def delete(path, query: nil)
       request(:delete, path, query:).body

@@ -65,15 +65,14 @@ class PaymentMethodSetup < ApplicationRecord
       revolut_pm = retrieve_revolut_pm(order_data)
       refund_revolut_order if order_data[:refunded_amount][:value].zero?
       PaymentMethod.create_from_revolut_pm!(customer:, revolut_pm:)
-      true
-    when RevolutMerchant::CONST::ORDER_STATE_PENDING, RevolutMerchant::CONST::ORDER_STATE_PROCESSING,
+    when RevolutMerchant::CONST::ORDER_STATE_PENDING, RevolutMerchant::CONST::ORDER_STATE_PROCESSING
       errors.add(:base, "order state is #{order_data[:state]}")
       # payment_method_setup can be confirmed later
-      false
+      nil
     when RevolutMerchant::CONST::ORDER_STATE_CANCELLED, RevolutMerchant::CONST::ORDER_STATE_FAILED
       errors.add(:base, "order state is #{order_data[:state]}")
       # payment_method_setup can be destroyed
-      false
+      nil
     else
       raise ArgumentError, "invalid revolut order #{order_data[:id]} state #{order_data[:state]}"
     end

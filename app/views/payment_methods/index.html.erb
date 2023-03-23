@@ -1,0 +1,71 @@
+<div class="flex justify-between">
+  <div class="page-heading">Payment methods</div>
+</div>
+
+<div class="flex flex-col gap-y-4">
+  <%= form_for :q, url: current_path, method: :get do |f| %>
+    <div class="card relative flex flex-row gap-x-2 items-center p-4 w-fit">
+      <%= f.label :customer_id, 'Customer ID' %>
+      <%= f.text_field :customer_id, value: params.dig(:q, :customer_id) %>
+      <%= f.submit 'Filter', class: 'btn-primary' %>
+      <%= link_to 'Clear', current_path, class: 'link-primary' %>
+    </div>
+  <% end %>
+
+
+  <% if @payment_methods.any? %>
+    <div class="card relative overflow-x-auto">
+      <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 font-semibold bg-gray-200">
+        <tr>
+          <th scope="col" class="px-6 py-3 w-0">ID</th>
+          <th scope="col" class="px-6 py-3 w-0">
+            <span class="sr-only">Actions</span>
+          </th>
+          <th scope="col" class="px-6 py-3">Customer</th>
+          <th scope="col" class="px-6 py-3">Card&nbsp;Number</th>
+          <th scope="col" class="px-6 py-3">Card&nbsp;Brand</th>
+          <th scope="col" class="px-6 py-3">Card&nbsp;Expiry</th>
+          <th scope="col" class="px-6 py-3">Created&nbsp;At</th>
+          <th scope="col" class="px-6 py-3">Updated&nbsp;At</th>
+          <th scope="col" class="px-6 py-3">Revolut&nbsp;ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @payment_methods.each do |payment_method| %>
+          <tr class="bg-white odd:bg-gray-50 border-b hover:bg-gray-100">
+            <td class="px-6 py-4"><%= payment_method.id %></td>
+            <td class="px-6 py-4">
+              <div class="flex flex-row justify-end gap-x-2">
+                <%= link_to 'Show',
+                            payment_method_path(payment_method.id),
+                            class: 'link-primary' %>
+                <%= button_to "Remove",
+                              payment_method_path(payment_method.id),
+                              class: 'link-primary',
+                              method: :delete,
+                              form: {
+                                data: { turbo_confirm: "Are you sure?" }
+                              } %>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <%= link_to payment_method.customer.display_name,
+                          customer_path(payment_method.customer_id),
+                          class: 'link-primary' %>
+            </td>
+            <td class="px-6 py-4"><%= payment_method.card_number %></td>
+            <td class="px-6 py-4"><%= payment_method.card_brand %></td>
+            <td class="px-6 py-4"><%= payment_method.card_expiry %></td>
+            <td class="px-6 py-4"><%= payment_method.created_at %></td>
+            <td class="px-6 py-4"><%= payment_method.updated_at %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= payment_method.revolut_pm_id %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="p-5">nothing</div>
+  <% end %>
+</div>

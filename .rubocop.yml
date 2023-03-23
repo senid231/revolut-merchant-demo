@@ -13,6 +13,7 @@ AllCops:
   Exclude:
     - 'tmp/**/*'
     - 'vendor/**/*'
+    - 'db/schema.rb'
 
 Layout/DotPosition:
   EnforcedStyle: leading
@@ -22,6 +23,8 @@ Layout/SpaceInsideArrayLiteralBrackets:
 
 Layout/LineLength:
   Max: 120
+  Exclude:
+    - "examples/**/*.rb"
 
 Layout/MultilineArrayBraceLayout:
   EnforcedStyle: new_line

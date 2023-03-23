@@ -1,5 +1,5 @@
 <%= turbo_frame_tag 'payment_method_setup' do %>
-  <%= form_for :payment_method, method: :post, url: customer_payment_methods_path, id: 'payment-method-create' do |f| %>
+  <%= form_for :payment_method, method: :post, url: payment_methods_path, id: 'payment-method-create' do |f| %>
     <%= f.hidden_field :payment_method_setup_id, value: @payment_method_setup.id %>
   <% end %>
   <%= render 'layouts/revolut_checkout' %>

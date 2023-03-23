@@ -1,0 +1,62 @@
+<div class="pb-4">
+  <%= link_to '<- Back', payment_path(@payment_transaction.payment_id), class: 'link-primary' %>
+</div>
+
+<div class="flex justify-between pb-2">
+  <div class="page-heading">Payment Transaction №<%= @payment_transaction.id %></div>
+</div>
+
+<div class="flex flex-row gap-x-4 mb-4">
+  <div class="card relative w-min h-fit p-2">
+    <div class="p-2 font-semibold">Payment Transaction details</div>
+    <table class="text-sm text-left text-gray-500">
+      <tbody>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">ID</th>
+        <td class="px-6 py-4"><%= @payment_transaction.id %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Customer</th>
+        <td class="px-6 py-4">
+          <%= link_to @payment_transaction.customer.display_name,
+                      customer_path(@payment_transaction.customer_id),
+                      class: 'link-primary' %>
+        </td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Payment Method</th>
+        <td class="px-6 py-4">
+          <%= link_to @payment_transaction.payment_method.display_name,
+                      payment_method_path(@payment_transaction.payment_method_id),
+                      class: 'link-primary' %>
+        </td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Payment</th>
+        <td class="px-6 py-4">
+          <%= link_to @payment_transaction.payment.display_name,
+                      payment_path(@payment_transaction.payment_id),
+                      class: 'link-primary' %>
+        </td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Created&nbsp;At</th>
+        <td class="px-6 py-4 whitespace-nowrap"><%= @payment_transaction.created_at %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Updated&nbsp;At</th>
+        <td class="px-6 py-4 whitespace-nowrap"><%= @payment_transaction.updated_at %></td>
+      </tr>
+      <tr class="bg-white">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Revolut&nbsp;ID</th>
+        <td class="px-6 py-4 whitespace-nowrap"><%= @payment_transaction.revolut_payment_id %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card relative w-min p-4 overflow-x-auto">
+    <div class="mb-4 font-semibold">Revolut Payment</div>
+    <pre><%= JSON.pretty_generate @payment_transaction.revolut_payment %></pre>
+  </div>
+</div>

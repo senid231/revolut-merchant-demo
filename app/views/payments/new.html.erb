@@ -1,0 +1,35 @@
+<div class="pb-4">
+  <%= link_to '<- Back', payments_path, class: 'link-primary' %>
+</div>
+
+<div class="flex justify-between pb-2">
+  <div class="page-heading">New Payment</div>
+</div>
+
+<div class="flex flex-row gap-x-4">
+  <%= form_for @payment do |f| %>
+    <div class="card p-4 flex flex-col gap-y-6 w-fit">
+      <%= semantic_errors(f) %>
+      <%= f.hidden_field(:customer_id, value: @payment.customer_id) %>
+
+      <div>
+        <%= f.label :amount, class: 'block' %>
+        <%= f.number_field :amount, step: '0.01', class: 'form-input' %>
+        <%= form_error(f, :amount) %>
+      </div>
+
+      <div>
+        <%= f.label :force_three_ds, 'Force 3DS', class: 'block' %>
+        <%= f.select :force_three_ds,
+                     [['Yes', true], ['No', false]],
+                     {},
+                     class: 'form-select w-full' %>
+        <%= form_error(f, :force_three_ds) %>
+      </div>
+
+      <%= f.submit 'Submit', class: 'btn-primary w-full' %>
+    </div>
+  <% end %>
+
+  <%= render 'customers/customer', customer: @payment.customer %>
+</div>

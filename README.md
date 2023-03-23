@@ -19,3 +19,11 @@ ruby bin/setup
 ```shell
 bundle exec rails server -b 127.0.0.1 -p 3000
 ```
+
+## Problems
+
+1. Can't test case when created payment method does not support 3DS. what will we see in response checks?
+2. Can't test case when created payment requires 3DS challenge
+3. `POST /payments` response will have state `authentication_started` and ew can't show 3DS popup after customer create payment on user panel. all payments with 3DS will be asynchronous through email
+   https://developer.revolut.com/docs/accept-payments/tutorials/save-and-charge-payment-methods/checkout-with-saved-card/#step-5-handle-3ds-challenge-and-track-payment-state
+4. Can't force payment to be rejected if 3DS required by customer's bank (we have such flow for auto-charge stripe cards)

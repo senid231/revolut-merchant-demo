@@ -6,7 +6,9 @@
   <div class="page-heading">Customer №<%= @customer.id %></div>
 
   <div class="flex items-center gap-x-2">
-    <%= link_to 'Edit', edit_customer_path(@customer.id), class: 'btn-primary' %>
+    <%= link_to 'Edit',
+                edit_customer_path(@customer.id),
+                class: 'btn-primary' %>
     <%= button_to "Remove",
                   customer_path(@customer.id),
                   class: 'btn-danger',
@@ -15,81 +17,22 @@
                     data: { turbo_confirm: "Are you sure?" }
                   } %>
     <%= link_to 'New Payment Method',
-                new_customer_payment_method_path(customer_id: @customer.id),
+                new_payment_method_path(customer_id: @customer.id),
                 class: 'btn-primary',
                 data: { turbo_frame: 'payment_method_setup' } %>
+    <%= link_to 'New Payment',
+                new_payment_path(customer_id: @customer.id),
+                class: 'btn-primary' %>
   </div>
 </div>
 
 <div class="flex flex-row gap-x-4">
-  <div class="card relative w-min">
-    <table class="text-sm text-left text-gray-500">
-      <tbody>
-      <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">ID</th>
-        <td class="px-6 py-4"><%= @customer.id %></td>
-      </tr>
-      <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Full&nbsp;Name</th>
-        <td class="px-6 py-4"><%= @customer.full_name %></td>
-      </tr>
-      <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Email</th>
-        <td class="px-6 py-4"><%= @customer.email %></td>
-      </tr>
-      <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Revolut&nbsp;ID</th>
-        <td class="px-6 py-4 whitespace-nowrap"><%= @customer.revolut_customer_id %></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <%= render @customer %>
 
-  <div class="card relative w-min p-2">
-    <div>Revolut Customer</div>
+  <div class="card relative w-min p-4 overflow-x-auto">
+    <div class="mb-4 font-semibold">Revolut Customer</div>
     <pre><%= JSON.pretty_generate @customer.revolut_customer %></pre>
   </div>
-
-  <div class="card relative w-min">
-    <table class="text-sm text-left text-gray-500">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-      <tr>
-        <th scope="col" class="px-6 py-3 w-0">ID</th>
-        <th scope="col" class="px-6 py-3 w-0">
-          <span class="sr-only">Actions</span>
-        </th>
-        <th scope="col" class="px-6 py-3">Card&nbsp;Number</th>
-        <th scope="col" class="px-6 py-3">Card&nbsp;Brand</th>
-        <th scope="col" class="px-6 py-3">Card&nbsp;Expiry</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @payment_methods.each do |payment_method| %>
-        <tr class="bg-white odd:bg-gray-50 border-b hover:bg-gray-100">
-          <td class="px-6 py-4"><%= payment_method.id %></td>
-          <td class="px-6 py-4">
-            <div class="flex flex-row justify-end gap-x-2">
-              <%= link_to 'Show',
-                          customer_payment_method_path(customer_id: @customer.id, id: payment_method.id),
-                          class: 'link-primary' %>
-              <%= button_to "Remove",
-                            customer_payment_method_path(customer_id: @customer.id, id: payment_method.id),
-                            class: 'link-primary',
-                            method: :delete,
-                            form: {
-                              data: { turbo_confirm: "Are you sure?" }
-                            } %>
-            </div>
-          </td>
-          <td class="px-6 py-4"><%= payment_method.card_number %></td>
-          <td class="px-6 py-4"><%= payment_method.card_brand %></td>
-          <td class="px-6 py-4"><%= payment_method.card_expiry %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-
 </div>
 
 <%= turbo_frame_tag 'payment_method_setup' %>
