@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faraday'
+
 module RevolutMerchant
   class RaiseErrorMiddleware < Faraday::Middleware
     # @param env [Faraday::Env]

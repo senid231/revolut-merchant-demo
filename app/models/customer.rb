@@ -17,7 +17,8 @@
 #
 class Customer < ApplicationRecord
   has_many :payment_method_setups, class_name: 'PaymentMethodSetup', dependent: :restrict_with_exception
-  has_many :payment_methods, class_name: 'PaymentMethod', dependent: :destroy
+  has_many :payment_methods, class_name: 'PaymentMethod', dependent: :restrict_with_exception
+  has_many :payments, class_name: 'Payment', dependent: :restrict_with_exception
 
   attr_readonly :revolut_customer_id
 
@@ -29,8 +30,8 @@ class Customer < ApplicationRecord
   after_update :sync_revolut_customer
   after_destroy :remove_revolut_customer
 
-  def active?
-    revolut_customer_id.present?
+  def display_name
+    "#{id} | #{full_name}"
   end
 
   def revolut_customer
@@ -43,6 +44,8 @@ class Customer < ApplicationRecord
       response_body: e.response_body
     }
   end
+
+  private
 
   def create_revolut_customer
     revolut_customer = RevolutMerchant::Client.customer_create(email:, full_name:)

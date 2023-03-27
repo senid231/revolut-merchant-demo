@@ -10,9 +10,32 @@
           <%= link_to 'Customers',
                       customers_path,
                       class: class_names(
-                        'block py-2 pl-3 pr-4 rounded md:p-0',
-                        'text-white bg-blue-700 md:bg-transparent md:text-blue-700': current_menu == :customers,
-                        'text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700': current_menu != :customers
+                        'navbar-menu-item-active': current_menu == :customers,
+                        'navbar-menu-item-inactive': current_menu != :customers
+                      ) %>
+        </li>
+        <li>
+          <%= link_to 'Payment Methods',
+                      payment_methods_path,
+                      class: class_names(
+                        'navbar-menu-item-active': current_menu == :payment_methods,
+                        'navbar-menu-item-inactive': current_menu != :payment_methods
+                      ) %>
+        </li>
+        <li>
+          <%= link_to 'Payments',
+                      payments_path,
+                      class: class_names(
+                        'navbar-menu-item-active': current_menu == :payments,
+                        'navbar-menu-item-inactive': current_menu != :payments
+                      ) %>
+        </li>
+        <li>
+          <%= link_to 'Payment Transactions',
+                      payment_transactions_path,
+                      class: class_names(
+                        'navbar-menu-item-active': current_menu == :payment_transactions,
+                        'navbar-menu-item-inactive': current_menu != :payment_transactions
                       ) %>
         </li>
       </ul>

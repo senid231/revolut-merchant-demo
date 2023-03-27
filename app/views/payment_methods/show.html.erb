@@ -1,13 +1,13 @@
 <div class="pb-4">
-  <%= link_to '<- Back', customer_path(@customer.id), class: 'link-primary' %>
+  <%= link_to '<- Back', payment_methods_path, class: 'link-primary' %>
 </div>
 
 <div class="flex justify-between pb-2">
   <div class="page-heading">Payment method №<%= @payment_method.id %></div>
 
   <div class="flex items-center gap-x-2">
-    <%= button_to "Remove",
-                  customer_payment_method_path(customer_id: @customer.id, id: @payment_method.id),
+    <%= button_to 'Remove',
+                  payment_method_path(@payment_method.id),
                   class: 'btn-danger',
                   method: :delete,
                   form: {
@@ -17,35 +17,52 @@
 </div>
 
 <div class="flex flex-row gap-x-4">
-  <div class="card relative w-min">
+  <div class="card relative w-min h-fit p-2">
+    <div class="p-2 font-semibold">Payment Method details</div>
     <table class="text-sm text-left text-gray-500">
       <tbody>
       <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">ID</th>
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">ID</th>
         <td class="px-6 py-4"><%= @payment_method.id %></td>
       </tr>
       <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Card&nbsp;Number</th>
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Customer</th>
+        <td class="px-6 py-4">
+          <%= link_to @payment_method.customer.display_name,
+                      customer_path(@payment_method.customer_id),
+                      class: 'link-primary' %>
+        </td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Card&nbsp;Number</th>
         <td class="px-6 py-4"><%= @payment_method.card_number %></td>
       </tr>
       <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Card&nbsp;Brand</th>
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Card&nbsp;Brand</th>
         <td class="px-6 py-4"><%= @payment_method.card_brand %></td>
       </tr>
       <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Card&nbsp;Expiry</th>
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Card&nbsp;Expiry</th>
         <td class="px-6 py-4"><%= @payment_method.card_expiry %></td>
       </tr>
       <tr class="bg-white border-b">
-        <th scope="col" class="text-xs text-gray-700 uppercase bg-gray-50 px-6 py-3">Revolut&nbsp;ID</th>
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Created&nbsp;At</th>
+        <td class="px-6 py-4 whitespace-nowrap"><%= @payment_method.created_at %></td>
+      </tr>
+      <tr class="bg-white border-b">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Updated&nbsp;At</th>
+        <td class="px-6 py-4 whitespace-nowrap"><%= @payment_method.updated_at %></td>
+      </tr>
+      <tr class="bg-white">
+        <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Revolut&nbsp;ID</th>
         <td class="px-6 py-4 whitespace-nowrap"><%= @payment_method.revolut_pm_id %></td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="card relative w-min p-2">
-    <div>Revolut Payment Method</div>
+  <div class="card relative w-min p-4 overflow-x-auto">
+    <div class="mb-4 font-semibold">Revolut Payment Method</div>
     <pre><%= JSON.pretty_generate @payment_method.revolut_pm %></pre>
   </div>
 

@@ -3,64 +3,91 @@
 @tailwind utilities;
 
 @layer components {
-  .card {
-    @apply shadow-md sm:rounded-lg bg-white;
-  }
+    .card {
+        @apply shadow-md rounded-lg bg-white;
+    }
 
-  .page-heading {
-    @apply
-    mb-4
-    text-3xl
-    font-extrabold
-    leading-none
-    tracking-tight
-    text-gray-900
-    md:text-4xl;
-  }
+    .page-heading {
+        @apply
+        mb-4
+        text-3xl
+        font-extrabold
+        leading-none
+        tracking-tight
+        text-gray-900
+        md:text-4xl;
+    }
 
-  .btn-primary {
-    @apply
-    text-white
-    bg-blue-700
-    hover:bg-blue-800
-    focus:ring-4
-    focus:ring-blue-300
-    font-medium
-    rounded-lg
-    text-sm
-    px-5
-    py-2.5
-    mr-2
-    mb-2
-    focus:outline-none;
-  }
+    .btn-primary {
+        @apply
+        text-white
+        bg-blue-700
+        hover:bg-blue-800
+        focus:ring-4
+        focus:ring-blue-300
+        font-medium
+        rounded-lg
+        text-sm
+        px-5
+        py-2.5
+        m-2
+        focus:outline-none;
+    }
 
-  .btn-danger {
-    @apply
-    text-white
-    bg-red-700
-    hover:bg-red-800
-    focus:ring-4
-    focus:ring-red-300
-    font-medium
-    rounded-lg
-    text-sm
-    px-5
-    py-2.5
-    mr-2
-    mb-2
-    focus:outline-none;
-  }
+    .btn-danger {
+        @apply
+        text-white
+        bg-red-700
+        hover:bg-red-800
+        focus:ring-4
+        focus:ring-red-300
+        font-medium
+        rounded-lg
+        text-sm
+        px-5
+        py-2.5
+        m-2
+        focus:outline-none;
+    }
 
-  .link-primary {
-    @apply font-medium text-blue-600 hover:underline;
-  }
+    .link-primary {
+        @apply font-medium text-blue-600 hover:underline;
+    }
 
-  .form-error {
-    @apply mt-2 text-sm text-red-700;
-  }
+    .form-error {
+        @apply mt-2 text-sm text-red-700;
+    }
 
-  .semantic-errors {
-    @apply flex flex-col p-4 mb-4 text-sm text-red-700 border border-red-300 rounded-lg bg-red-50;
-  }
+    .semantic-errors {
+        @apply flex flex-col p-4 mb-4 text-sm text-red-700 border border-red-300 rounded-lg bg-red-50;
+    }
+
+    .navbar-menu-item-active {
+        @apply
+        block
+        py-2
+        pl-3
+        pr-4
+        rounded
+        md:p-0
+        text-gray-700
+        hover:bg-gray-200
+        md:hover:bg-transparent
+        md:border-0
+        md:hover:text-blue-700;
+    }
+
+    .navbar-menu-item-inactive {
+        @apply
+        block
+        py-2
+        pl-3
+        pr-4
+        rounded
+        md:p-0
+        text-white
+        bg-blue-700
+        md:bg-transparent
+        md:text-blue-700;
+    }
 }

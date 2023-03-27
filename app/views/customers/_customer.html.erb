@@ -1,0 +1,49 @@
+<div class="card relative w-min h-fit p-2">
+  <div class="p-2 font-semibold">Customer details</div>
+  <table class="text-sm text-left text-gray-500">
+    <tbody>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">ID</th>
+      <td class="px-6 py-4">
+        <% if controller_name == 'customers' %>
+          <%= customer.id %>
+        <% else %>
+          <%= link_to customer.id, customer_path(customer.id), class: 'link-primary' %>
+        <% end %>
+      </td>
+    </tr>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Full&nbsp;Name</th>
+      <td class="px-6 py-4"><%= customer.full_name %></td>
+    </tr>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Email</th>
+      <td class="px-6 py-4"><%= customer.email %></td>
+    </tr>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Created&nbsp;At</th>
+      <td class="px-6 py-4 whitespace-nowrap"><%= customer.created_at %></td>
+    </tr>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Updated&nbsp;At</th>
+      <td class="px-6 py-4 whitespace-nowrap"><%= customer.updated_at %></td>
+    </tr>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Revolut&nbsp;ID</th>
+      <td class="px-6 py-4 whitespace-nowrap"><%= customer.revolut_customer_id %></td>
+    </tr>
+    <tr class="bg-white border-b">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Payment&nbsp;Methods</th>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <%= link_to customer.payment_methods.count, payment_methods_path(q: { customer_id: customer.id }) %>
+      </td>
+    </tr>
+    <tr class="bg-white">
+      <th scope="col" class="text-xs text-gray-700 uppercase px-6 py-3 border-r">Payment</th>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <%= link_to customer.payments.count, payments_path(q: { customer_id: customer.id }) %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

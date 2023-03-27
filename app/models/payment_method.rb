@@ -47,4 +47,8 @@ class PaymentMethod < ApplicationRecord
   def card_expiry
     card_expired_at.strftime('%m/%Y')
   end
+
+  def display_name
+    "#{id} | #{card_number} #{card_expiry}"
+  end
 end
