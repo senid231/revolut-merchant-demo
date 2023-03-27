@@ -5,7 +5,7 @@ Concept of revolut merchant API integration with Rails application.
 Inspired by [jpalumickas/revolut-ruby](https://github.com/jpalumickas/revolut-ruby)
 
 ## Requirements
-Ruby: 3.1.2
+Ruby: 3.1.2  
 SQLite: 3
 
 ## Installation
