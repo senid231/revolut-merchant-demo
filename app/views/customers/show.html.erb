@@ -18,8 +18,7 @@
                   } %>
     <%= link_to 'New Payment Method',
                 new_payment_method_path(customer_id: @customer.id),
-                class: 'btn-primary',
-                data: { turbo_frame: 'payment_method_setup' } %>
+                class: 'btn-primary' %>
     <%= link_to 'New Payment',
                 new_payment_path(customer_id: @customer.id),
                 class: 'btn-primary' %>
@@ -34,5 +33,3 @@
     <pre><%= JSON.pretty_generate @customer.revolut_customer %></pre>
   </div>
 </div>
-
-<%= turbo_frame_tag 'payment_method_setup' %>

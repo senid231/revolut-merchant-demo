@@ -20,7 +20,7 @@
 #  customer_id  (customer_id => customers.id)
 #
 class PaymentMethodSetup < ApplicationRecord
-  ORDER_AMOUNT_CENTS = 100
+  ORDER_AMOUNT_CENTS = 0
 
   belongs_to :customer, class_name: 'Customer'
 
@@ -39,10 +39,9 @@ class PaymentMethodSetup < ApplicationRecord
     when RevolutMerchant::CONST::ORDER_STATE_PENDING, RevolutMerchant::CONST::ORDER_STATE_AUTHORISED
       RevolutMerchant::Client.order_delete(revolut_order_id)
       destroy!
-    when RevolutMerchant::CONST::ORDER_STATE_CANCELLED, RevolutMerchant::CONST::ORDER_STATE_FAILED
-      destroy!
-    when RevolutMerchant::CONST::ORDER_STATE_COMPLETED
-      refund_revolut_order if order_data[:refunded_amount][:value].zero?
+    when RevolutMerchant::CONST::ORDER_STATE_CANCELLED,
+         RevolutMerchant::CONST::ORDER_STATE_FAILED,
+         RevolutMerchant::CONST::ORDER_STATE_COMPLETED
       destroy!
     when RevolutMerchant::CONST::ORDER_STATE_PROCESSING
       errors.add(:base, 'order is waiting for processing')
@@ -59,19 +58,16 @@ class PaymentMethodSetup < ApplicationRecord
     when RevolutMerchant::CONST::ORDER_STATE_AUTHORISED
       order_data = capture_revolut_order
       revolut_pm = retrieve_revolut_pm(order_data)
-      refund_revolut_order
       PaymentMethod.create_from_revolut_pm!(customer:, revolut_pm:)
     when RevolutMerchant::CONST::ORDER_STATE_COMPLETED
       revolut_pm = retrieve_revolut_pm(order_data)
-      refund_revolut_order if order_data[:refunded_amount][:value].zero?
       PaymentMethod.create_from_revolut_pm!(customer:, revolut_pm:)
-    when RevolutMerchant::CONST::ORDER_STATE_PENDING, RevolutMerchant::CONST::ORDER_STATE_PROCESSING
+    when RevolutMerchant::CONST::ORDER_STATE_PENDING,
+         RevolutMerchant::CONST::ORDER_STATE_PROCESSING,
+         RevolutMerchant::CONST::ORDER_STATE_CANCELLED,
+         RevolutMerchant::CONST::ORDER_STATE_FAILED
       errors.add(:base, "order state is #{order_data[:state]}")
       # payment_method_setup can be confirmed later
-      nil
-    when RevolutMerchant::CONST::ORDER_STATE_CANCELLED, RevolutMerchant::CONST::ORDER_STATE_FAILED
-      errors.add(:base, "order state is #{order_data[:state]}")
-      # payment_method_setup can be destroyed
       nil
     else
       raise ArgumentError, "invalid revolut order #{order_data[:id]} state #{order_data[:state]}"
@@ -106,14 +102,6 @@ class PaymentMethodSetup < ApplicationRecord
 
   def capture_revolut_order
     RevolutMerchant::Client.order_capture(revolut_order_id)
-  end
-
-  def refund_revolut_order
-    RevolutMerchant::Client.order_refund(
-      revolut_order_id,
-      amount: ORDER_AMOUNT_CENTS,
-      metadata: { description: revolut_description }
-    )
   end
 
   def revolut_description

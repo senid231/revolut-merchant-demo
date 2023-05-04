@@ -105,6 +105,9 @@ Style/BlockDelimiters:
   Enabled: true
   BracesRequiredMethods: ['expect', 'change']
 
+Style/GuardClause:
+  Enabled: false
+
 # internal concerns must be written in compact style.
 # classes in a namespace should be written in expanded style.
 Style/ClassAndModuleChildren:

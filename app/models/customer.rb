@@ -20,11 +20,14 @@ class Customer < ApplicationRecord
   has_many :payment_methods, class_name: 'PaymentMethod', dependent: :restrict_with_exception
   has_many :payments, class_name: 'Payment', dependent: :restrict_with_exception
 
-  attr_readonly :revolut_customer_id
-
   validates :full_name, presence: true
   validates :email, presence: true
   validates :email, uniqueness: true, allow_blank: true
+  validate :readonly_revolut_customer_id
+
+  def readonly_revolut_customer_id
+    errors.add(:revolut_customer_id, 'is readonly') if revolut_customer_id_changed? && revolut_customer_id_was.present?
+  end
 
   after_create :create_revolut_customer
   after_update :sync_revolut_customer
@@ -49,7 +52,7 @@ class Customer < ApplicationRecord
 
   def create_revolut_customer
     revolut_customer = RevolutMerchant::Client.customer_create(email:, full_name:)
-    update!(revolut_customer_id: revolut_customer[:id])
+    update_columns(revolut_customer_id: revolut_customer[:id])
   end
 
   def sync_revolut_customer
