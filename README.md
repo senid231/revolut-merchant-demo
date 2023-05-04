@@ -17,10 +17,10 @@ ruby bin/setup
 ## Test cards
 
 https://developer.revolut.com/docs/accept-payments/tutorials/test-in-the-sandbox-environment/test-cards/
-
-4929420573595709	VISA
+```
+4929420573595709	VISA  
 5281438801804148	MASTERCARD
-
+```
 ## Running
 
 ```shell
